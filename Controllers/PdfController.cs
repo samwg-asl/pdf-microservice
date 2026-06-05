@@ -42,9 +42,62 @@ namespace PdfMicroservice.Controllers
                     <html>
                     <head>
                         <meta charset='utf-8'>
+                        <style>
+                            body {{ 
+                                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+                                padding: 20mm; 
+                                background-color: #ffffff; 
+                            }}
+
+                            .ql-editor ul, .ql-editor ol {{ list-style-type: none !important; padding-left: 0 !important; }}
+                            .ql-editor li::marker {{ content: '' !important; display: none !important; }}
+
+                            .ql-editor li[data-list] {{
+                                position: relative !important;
+                                padding-left: 24px !important;
+                                line-height: 1.6;
+                                margin-bottom: 4px;
+                            }}
+
+                            /* Unchecked Box */
+                            .ql-editor li[data-list='unchecked'] > .ql-ui::before {{
+                                content: '' !important;
+                                position: absolute !important;
+                                left: 0 !important;
+                                top: 3px !important;
+                                width: 16px !important;
+                                height: 16px !important;
+                                background-image: url('data:image/svg+xml;utf8,<svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 16 16""><rect x=""1.5"" y=""1.5"" width=""13"" height=""13"" rx=""2"" fill=""none"" stroke=""%23444444"" stroke-width=""1.5""/></svg>') !important;
+                                background-size: contain !important;
+                                background-repeat: no-repeat !important;
+                            }}
+
+                            /* Checked Box */
+                            .ql-editor li[data-list='checked'] > .ql-ui::before {{
+                                content: '' !important;
+                                position: absolute !important;
+                                left: 0 !important;
+                                top: 3px !important;
+                                width: 16px !important;
+                                height: 16px !important;
+                                background-image: url('data:image/svg+xml;utf8,<svg xmlns=""http://www.w3.org/2000/svg"" viewBox=""0 0 16 16""><rect x=""1.5"" y=""1.5"" width=""13"" height=""13"" rx=""2"" fill=""%2306c"" stroke=""%2306c"" stroke-width=""1.5""/><path d=""M5 8.5 l2 2 l4 -4"" fill=""none"" stroke=""white"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round""/></svg>') !important;
+                                background-size: contain !important;
+                                background-repeat: no-repeat !important;
+                            }}
+
+                            /* ─── FIXED TEXT NODE COLOR HANDLING ─── */
+                            .ql-editor li[data-list='checked'] {{
+                                color: #000000 !important;                /* Keeps text dark black */
+                                text-decoration: none !important; /* Keeps strike-through line */
+                            }}
+
+                            @media print {{ 
+                                body {{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }} 
+                            }}
+                        </style>
                     </head>
-                    <body>
-                        <div class='ql-container ql-snow'>
+                    <body class='ql-snow'>
+                        <div class='ql-container ql-snow' style='border: none !important;'>
                             <div class='ql-editor'>{quillHtml}</div>
                         </div>
                     </body>
@@ -61,6 +114,9 @@ namespace PdfMicroservice.Controllers
                 string kataxJsPath = Path.Combine(AppContext.BaseDirectory, "Assets", "katex.min.js");
                 await page.AddScriptTagAsync(new AddTagOptions { Path = kataxJsPath });
                 
+                string checkboxCssPath = Path.Combine(AppContext.BaseDirectory, "Assets", "checkbox.css");
+                await page.AddStyleTagAsync(new AddTagOptions { Path = checkboxCssPath });
+
                 string renderScript = """
                     (() => {
                         document.querySelectorAll('.ql-formula').forEach(el => {
