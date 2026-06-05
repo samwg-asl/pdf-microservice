@@ -1,0 +1,39 @@
+.app-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #fff;
+}
+
+.editor-wrapper {
+  margin: 20px 0;
+  background-color: #fff;
+}
+
+/* Set a clean physical height for the editor text zone */
+.ql-container {
+  min-height: 300px;
+  font-size: 16px;
+}
+
+.export-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.export-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.export-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
