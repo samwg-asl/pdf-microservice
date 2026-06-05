@@ -49,6 +49,18 @@ namespace PdfMicroservice.Controllers
                                 background-color: #ffffff; 
                             }}
 
+                            .ql-container, .ql-editor {{
+                                height: auto !important;        /* Overrides fixed pixel/viewport heights */
+                                overflow: visible !important;    /* Allows text to spill onto page 2, 3, etc. */
+                                position: static !important;    /* Removes absolute boundary constraints */
+                            }}
+
+                            /* 3. Ensure list items don't awkwardly split in half at the page edge */
+                            .ql-editor li {{
+                                page-break-inside: avoid !important;
+                                break-inside: avoid !important;
+                            }}
+
                             .ql-editor ul, .ql-editor ol {{ list-style-type: none !important; padding-left: 0 !important; }}
                             .ql-editor li::marker {{ content: '' !important; display: none !important; }}
 
