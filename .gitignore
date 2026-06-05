@@ -56,9 +56,3 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 
-# React
-node_modules/
-dist/
-build/
-out/
-
